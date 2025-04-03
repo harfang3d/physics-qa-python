@@ -80,3 +80,4 @@ hg.DestroyWindow(win)
 
 hg.WindowSystemShutdown()
 hg.InputShutdown()
+
