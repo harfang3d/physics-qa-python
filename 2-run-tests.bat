@@ -1,0 +1,26 @@
+python !rb_dynamic_collision_events.py
+python raycast_various_collshapes.py
+python rb_dynamic_add_force_during_update.py
+python rb_dynamic_add_force_on_init.py
+python rb_dynamic_add_torque_on_init.py
+python rb_dynamic_angular_velocity_on_init.py
+python rb_dynamic_chair_multi_colbox.py
+python rb_dynamic_linear_velocity_on_init.py
+python rb_dynamic_variable_friction.py
+python rb_dynamic_variable_restitution.py
+python rb_dynamic_variable_rolling_friction.py
+python rb_kinematic_add_force_during_update.py
+python rb_kinematic_add_torque_during_update.py
+python rb_kinematic_animation_instance.py
+python rb_kinematic_parenting.py
+python rb_kinematic_set_position_rotation.py
+python rb_kinematic_set_position_rotation_instance.py
+python rb_kinematic_set_world_matrix.py
+python rb_mesh_collider_raycast.py
+python rb_rings_chain.py
+python rb_static_reset_position_rotation.py
+python rb_static_reset_world_matrix.py
+python rb_static_set_position_rotation.py
+python rb_mesh_collider_raycast_mesh_terrain.py
+python rb_dynamic_add_constraint.py
+pause
