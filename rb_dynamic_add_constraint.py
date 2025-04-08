@@ -15,111 +15,113 @@ def  create_physic_cube_ex(scene, size, mtx, model_ref, materials, rb_type=hg.RB
 
 def get_nodes(scene, paths):
     nodes = {}
-    for key, path in paths.items():
+    for path in paths:
+        key = path.split("/")[-1]
         nodes[key] = scene.GetNodeEx(path)
     return nodes
 
 
-def create_anchors(nodes, joints):
+def create_anchors(nodes, joint_paths):
     anchors = {}
-    for key, joint in joints.items():
-        anchors[key] = hg.TransformationMat4(nodes[joint].GetTransform().GetPos(), nodes[joint].GetTransform().GetRot())
+    for joint_path in joint_paths:
+        anchor_key = f"{joint_path}_anchor" 
+        anchors[anchor_key] = hg.TransformationMat4(nodes[joint_path].GetTransform().GetPos(), nodes[joint_path].GetTransform().GetRot())
     return anchors
 
-node_paths = {
-    "chest": "chest",
-    "chest_bone": "chest/chest_bone",
-    "chest_joint_to_head": "chest/chest_joint_to_head",
-    "chest_joint_to_right_arm_2": "chest/chest_joint_to_right_arm_2",
-    "chest_joint_to_right_arm_3": "chest/chest_joint_to_right_arm_3",
-    "chest_joint_to_left_arm_2": "chest/chest_joint_to_left_arm_2",
-    "chest_joint_to_left_arm_3": "chest/chest_joint_to_left_arm_3",
-    "chest_joint_to_right_leg": "chest/chest_joint_to_right_leg",
-    "chest_joint_to_right_leg_2": "chest/chest_joint_to_right_leg_2",
-    "chest_joint_to_right_leg_3": "chest/chest_joint_to_right_leg_3",
-    "chest_joint_to_right_leg_4": "chest/chest_joint_to_right_leg_4",
-    "chest_joint_to_left_leg": "chest/chest_joint_to_left_leg",
-    "chest_joint_to_left_leg_2": "chest/chest_joint_to_left_leg_2",
-    "chest_joint_to_left_leg_3": "chest/chest_joint_to_left_leg_3",
-    "chest_joint_to_left_leg_4": "chest/chest_joint_to_left_leg_4",
-    "left_leg_joint_to_chest": "left_leg/left_leg_joint_to_chest",
-    "left_leg_joint_to_chest_2": "left_leg/left_leg_joint_to_chest_2",
-    "left_leg_joint_to_chest_3": "left_leg/left_leg_joint_to_chest_3",
-    "left_leg_joint_to_chest_4": "left_leg/left_leg_joint_to_chest_4",
-    "right_leg_joint_to_chest": "right_leg/right_leg_joint_to_chest",
-    "right_leg_joint_to_chest_2": "right_leg/right_leg_joint_to_chest_2",
-    "right_leg_joint_to_chest_3": "right_leg/right_leg_joint_to_chest_3",
-    "right_leg_joint_to_chest_4": "right_leg/right_leg_joint_to_chest_4",
-    "right_arm_joint_to_chest": "right_arm/right_arm_joint_to_chest",
-    "right_arm_joint_to_chest_2": "right_arm/right_arm_joint_to_chest_2",
-    "left_arm_joint_to_chest": "left_arm/left_arm_joint_to_chest",
-    "left_arm_joint_to_chest_2": "left_arm/left_arm_joint_to_chest_2",
-    "head_joint_to_chest": "head/head_joint_to_chest",
-    "left_leg_joint_to_ground": "left_leg/left_leg_joint_to_ground",
-    "left_leg_joint_to_ground_2": "left_leg/left_leg_joint_to_ground_2",
-    "left_leg_joint_to_ground_3": "left_leg/left_leg_joint_to_ground_3",
-    "right_leg_joint_to_ground": "right_leg/right_leg_joint_to_ground",
-    "right_leg_joint_to_ground_2": "right_leg/right_leg_joint_to_ground_2",
-    "right_leg_joint_to_ground_3": "right_leg/right_leg_joint_to_ground_3",
-    "ground_joint_to_left_leg": "ground/ground_joint_to_left_leg",
-    "ground_joint_to_left_leg_2": "ground/ground_joint_to_left_leg_2",
-    "ground_joint_to_left_leg_3": "ground/ground_joint_to_left_leg_3",
-    "ground_joint_to_right_leg": "ground/ground_joint_to_right_leg",
-    "ground_joint_to_right_leg_2": "ground/ground_joint_to_right_leg_2",
-    "ground_joint_to_right_leg_3": "ground/ground_joint_to_right_leg_3",
-    "right_arm": "right_arm",
-    "right_arm_bone": "right_arm/right_arm_bone",
-    "left_arm": "left_arm",
-    "left_arm_bone": "left_arm/left_arm_bone",
-    "right_leg": "right_leg",
-    "right_leg_bone": "right_leg/right_leg_bone",
-    "left_leg": "left_leg",
-    "left_leg_bone": "left_leg/left_leg_bone",
-    "head": "head",
-    "head_bone": "head/head_bone",
-    "ground": "ground"
-}
+node_paths = [
+    "chest",
+    "chest/chest_bone",
+    "chest/chest_joint_to_head",
+    "chest/chest_joint_to_right_arm_2",
+    "chest/chest_joint_to_right_arm_3",
+    "chest/chest_joint_to_left_arm_2",
+    "chest/chest_joint_to_left_arm_3",
+    "chest/chest_joint_to_right_leg",
+    "chest/chest_joint_to_right_leg_2",
+    "chest/chest_joint_to_right_leg_3",
+    "chest/chest_joint_to_right_leg_4",
+    "chest/chest_joint_to_left_leg",
+    "chest/chest_joint_to_left_leg_2",
+    "chest/chest_joint_to_left_leg_3",
+    "chest/chest_joint_to_left_leg_4",
+    "left_leg/left_leg_joint_to_chest",
+    "left_leg/left_leg_joint_to_chest_2",
+    "left_leg/left_leg_joint_to_chest_3",
+    "left_leg/left_leg_joint_to_chest_4",
+    "right_leg/right_leg_joint_to_chest",
+    "right_leg/right_leg_joint_to_chest_2",
+    "right_leg/right_leg_joint_to_chest_3",
+    "right_leg/right_leg_joint_to_chest_4",
+    "right_arm/right_arm_joint_to_chest",
+    "right_arm/right_arm_joint_to_chest_2",
+    "left_arm/left_arm_joint_to_chest",
+    "left_arm/left_arm_joint_to_chest_2",
+    "head/head_joint_to_chest",
+    "left_leg/left_leg_joint_to_ground",
+    "left_leg/left_leg_joint_to_ground_2",
+    "left_leg/left_leg_joint_to_ground_3",
+    "right_leg/right_leg_joint_to_ground",
+    "right_leg/right_leg_joint_to_ground_2",
+    "right_leg/right_leg_joint_to_ground_3",
+    "ground/ground_joint_to_left_leg",
+    "ground/ground_joint_to_left_leg_2",
+    "ground/ground_joint_to_left_leg_3",
+    "ground/ground_joint_to_right_leg",
+    "ground/ground_joint_to_right_leg_2",
+    "ground/ground_joint_to_right_leg_3",
+    "right_arm",
+    "right_arm/right_arm_bone",
+    "left_arm",
+    "left_arm/left_arm_bone",
+    "right_leg",
+    "right_leg/right_leg_bone",
+    "left_leg",
+    "left_leg/left_leg_bone",
+    "head",
+    "head/head_bone",
+    "ground"
+]
 
-joint_paths = {
-    "right_arm_joint_anchor": "right_arm_joint_to_chest",
-    "right_arm_2_joint_anchor": "right_arm_joint_to_chest_2",
-    "left_arm_joint_anchor": "left_arm_joint_to_chest",
-    "left_arm_2_joint_anchor": "left_arm_joint_to_chest_2",
-    "right_leg_joint_anchor": "right_leg_joint_to_chest",
-    "right_leg_2_joint_anchor": "right_leg_joint_to_chest_2",
-    "right_leg_3_joint_anchor": "right_leg_joint_to_chest_3",
-    "right_leg_4_joint_anchor": "right_leg_joint_to_chest_4",
-    "left_leg_joint_anchor": "left_leg_joint_to_chest",
-    "left_leg_2_joint_anchor": "left_leg_joint_to_chest_2",
-    "left_leg_3_joint_anchor": "left_leg_joint_to_chest_3",
-    "left_leg_4_joint_anchor": "left_leg_joint_to_chest_4",
-    "head_joint_anchor": "head_joint_to_chest",
-    "chest_joint_to_head_anchor": "chest_joint_to_head",
-    "chest_joint_2_to_right_arm_anchor": "chest_joint_to_right_arm_2",
-    "chest_joint_3_to_right_arm_anchor": "chest_joint_to_right_arm_3",
-    "chest_joint_2_to_left_arm_anchor": "chest_joint_to_left_arm_2",
-    "chest_joint_3_to_left_arm_anchor": "chest_joint_to_left_arm_3",
-    "chest_joint_to_right_leg_anchor": "chest_joint_to_right_leg",
-    "chest_joint_2_to_right_leg_anchor": "chest_joint_to_right_leg_2",
-    "chest_joint_3_to_right_leg_anchor": "chest_joint_to_right_leg_3",
-    "chest_joint_4_to_right_leg_anchor": "chest_joint_to_right_leg_4",
-    "chest_joint_to_left_leg_anchor": "chest_joint_to_left_leg",
-    "chest_joint_2_to_left_leg_anchor": "chest_joint_to_left_leg_2",
-    "chest_joint_3_to_left_leg_anchor": "chest_joint_to_left_leg_3",
-    "chest_joint_4_to_left_leg_anchor": "chest_joint_to_left_leg_4",
-    "left_leg_5_joint_anchor": "left_leg_joint_to_ground",
-    "left_leg_6_joint_anchor": "left_leg_joint_to_ground_2",
-    "left_leg_7_joint_anchor": "left_leg_joint_to_ground_3",
-    "right_leg_5_joint_anchor": "right_leg_joint_to_ground",
-    "right_leg_6_joint_anchor": "right_leg_joint_to_ground_2",
-    "right_leg_7_joint_anchor": "right_leg_joint_to_ground_3",
-    "ground_joint_anchor": "ground_joint_to_left_leg",
-    "ground_joint_2_anchor": "ground_joint_to_left_leg_2",
-    "ground_joint_3_anchor": "ground_joint_to_left_leg_3",
-    "ground_joint_4_anchor": "ground_joint_to_right_leg",
-    "ground_joint_5_anchor": "ground_joint_to_right_leg_2",
-    "ground_joint_6_anchor": "ground_joint_to_right_leg_3"
-}
+joint_paths = [
+    "right_arm_joint_to_chest",
+    "right_arm_joint_to_chest_2",
+    "left_arm_joint_to_chest",
+    "left_arm_joint_to_chest_2",
+    "right_leg_joint_to_chest",
+    "right_leg_joint_to_chest_2",
+    "right_leg_joint_to_chest_3",
+    "right_leg_joint_to_chest_4",
+    "left_leg_joint_to_chest",
+    "left_leg_joint_to_chest_2",
+    "left_leg_joint_to_chest_3",
+    "left_leg_joint_to_chest_4",
+    "head_joint_to_chest",
+    "chest_joint_to_head",
+    "chest_joint_to_right_arm_2",
+    "chest_joint_to_right_arm_3",
+    "chest_joint_to_left_arm_2",
+    "chest_joint_to_left_arm_3",
+    "chest_joint_to_right_leg",
+    "chest_joint_to_right_leg_2",
+    "chest_joint_to_right_leg_3",
+    "chest_joint_to_right_leg_4",
+    "chest_joint_to_left_leg",
+    "chest_joint_to_left_leg_2",
+    "chest_joint_to_left_leg_3",
+    "chest_joint_to_left_leg_4",
+    "left_leg_joint_to_ground",
+    "left_leg_joint_to_ground_2",
+    "left_leg_joint_to_ground_3",
+    "right_leg_joint_to_ground",
+    "right_leg_joint_to_ground_2",
+    "right_leg_joint_to_ground_3",
+    "ground_joint_to_left_leg",
+    "ground_joint_to_left_leg_2",
+    "ground_joint_to_left_leg_3",
+    "ground_joint_to_right_leg",
+    "ground_joint_to_right_leg_2",
+    "ground_joint_to_right_leg_3"
+]
 
 hg.AddAssetsFolder('assets_compiled')
 
@@ -159,8 +161,27 @@ clocks = hg.SceneClocks()
 nodes = get_nodes(scene, node_paths)
 anchors = create_anchors(nodes, joint_paths)
 
-for key, joint in joint_paths.items():
-    physics.Add6DofConstraint(nodes[joint.split('_anchor')[0]], nodes[joint], anchors[key], anchors[joint])
+print(nodes['chest_joint_to_right_arm_2'].HasRigidBody())
+
+
+physics.Add6DofConstraint(nodes['chest'], nodes['right_arm'], anchors['chest_joint_to_right_arm_2_anchor'], anchors['right_arm_joint_to_chest_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['right_arm'], anchors['chest_joint_to_right_arm_3_anchor'], anchors['right_arm_joint_to_chest_2_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['left_arm'], anchors['chest_joint_to_left_arm_2_anchor'], anchors['left_arm_joint_to_chest_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['left_arm'], anchors['chest_joint_to_left_arm_3_anchor'], anchors['left_arm_joint_to_chest_2_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['right_leg'], anchors['chest_joint_to_right_leg_anchor'], anchors['right_leg_joint_to_chest_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['right_leg'], anchors['chest_joint_to_right_leg_2_anchor'], anchors['right_leg_joint_to_chest_2_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['right_leg'], anchors['chest_joint_to_right_leg_3_anchor'], anchors['right_leg_joint_to_chest_3_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['left_leg'], anchors['chest_joint_to_left_leg_anchor'], anchors['left_leg_joint_to_chest_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['left_leg'], anchors['chest_joint_to_left_leg_2_anchor'], anchors['left_leg_joint_to_chest_2_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['left_leg'], anchors['chest_joint_to_left_leg_3_anchor'], anchors['left_leg_joint_to_chest_3_anchor'])
+physics.Add6DofConstraint(nodes['chest'], nodes['head'], anchors['chest_joint_to_head_anchor'], anchors['head_joint_to_chest_anchor'])
+
+physics.Add6DofConstraint(nodes['left_leg'], nodes['ground'], anchors['left_leg_joint_to_ground_anchor'], anchors['ground_joint_to_left_leg_anchor'])
+physics.Add6DofConstraint(nodes['left_leg'], nodes['ground'], anchors['left_leg_joint_to_ground_2_anchor'], anchors['ground_joint_to_left_leg_2_anchor'])
+physics.Add6DofConstraint(nodes['left_leg'], nodes['ground'], anchors['left_leg_joint_to_ground_3_anchor'], anchors['ground_joint_to_left_leg_3_anchor'])
+physics.Add6DofConstraint(nodes['right_leg'], nodes['ground'], anchors['right_leg_joint_to_ground_anchor'], anchors['ground_joint_to_right_leg_anchor'])
+physics.Add6DofConstraint(nodes['right_leg'], nodes['ground'], anchors['right_leg_joint_to_ground_2_anchor'], anchors['ground_joint_to_right_leg_2_anchor'])
+physics.Add6DofConstraint(nodes['right_leg'], nodes['ground'], anchors['right_leg_joint_to_ground_3_anchor'], anchors['ground_joint_to_right_leg_3_anchor'])
 
 keyboard = hg.Keyboard()
 
