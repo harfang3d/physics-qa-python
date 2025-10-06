@@ -2,8 +2,8 @@
 
 ![](img/rb_dynamic_chair_multi_colbox.png)
 
-A series of test, implemented in Lua, for QA'ing the integration of [Bullet Physics](https://github.com/bulletphysics) into HARFANG.
-Each `.lua` unit as a specific purpose. The list below is meant to set an overall roadmap of the topics to be tested:
+A series of test, implemented in Python, for QA'ing the integration of [Bullet Physics](https://github.com/bulletphysics) into HARFANG.
+Each `.py` unit as a specific purpose. The list below is meant to set an overall roadmap of the topics to be tested:
 
 ## Collision shapes
 
